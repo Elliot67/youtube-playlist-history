@@ -1,0 +1,34 @@
+name: "Auto save playlist"
+
+on:
+  schedule:
+  - cron: "0 0 * * 1"
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Download youtube-dl
+        run : |
+          sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+          sudo chmod a+rx /usr/local/bin/youtube-dl
+
+      - name: Clone repo
+        uses: actions/checkout@v2
+
+      - name: Generate file
+        run: |
+          youtube-dl --get-title --get-id --no-warnings --no-mark-watched --ignore-errors https://www.youtube.com/playlist?list=${{ github.playlistId }} > ${{ github.playlistId }}.txt
+
+      - name: Setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+
+      - name: Commit the file
+        run: |
+          git add ${{ github.playlistId }}.txt
+          git commit -m "new date commit"
+          git push origin main
