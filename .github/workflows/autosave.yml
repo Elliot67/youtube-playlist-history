@@ -1,6 +1,7 @@
 name: "Auto save playlist"
 
 on:
+  workflow_dispatch:
   schedule:
   - cron: "0 0 * * 1"
 
