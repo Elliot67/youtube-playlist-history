@@ -15,13 +15,14 @@ jobs:
         run : |
           sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
           sudo chmod a+rx /usr/local/bin/youtube-dl
+          sudo youtube-dl --update
 
       - name: Clone repo
         uses: actions/checkout@v2
 
       - name: Generate file
         run: |
-          youtube-dl --skip-download --get-title --get-id --no-warnings --no-mark-watched --ignore-errors --no-warnings --geo-bypass --no-progress https://www.youtube.com/playlist?list=${{ secrets.PLAYLIST_ID }} > playlist.txt
+          youtube-dl --skip-download --get-title --get-id --no-warnings --verbose --no-mark-watched --ignore-errors --no-warnings --geo-bypass --no-progress https://www.youtube.com/playlist?list=${{ secrets.PLAYLIST_ID }} > playlist.txt
 
       - name: Setup git config
         run: |
