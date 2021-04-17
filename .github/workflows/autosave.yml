@@ -7,18 +7,16 @@ on:
 
 jobs:
   execute:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
 
       - name: Download youtube-dl
-        run : |
-          sudo curl -L https://yt-dl.org/downloads/2021.04.07/youtube-dl -o /usr/local/bin/youtube-dl
+        run : |  
+          sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
           sudo chmod a+rx /usr/local/bin/youtube-dl
-          
-        #sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
-        #sudo chmod a+rx /usr/local/bin/youtube-dl
-        #sudo youtube-dl --update
+          sudo youtube-dl --update
+          youtube-dl --version
 
       - name: Clone repo
         uses: actions/checkout@v2
