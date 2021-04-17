@@ -21,7 +21,8 @@ jobs:
 
       - name: Generate file
         run: |
-          youtube-dl --get-title --get-id --no-warnings --no-mark-watched --ignore-errors https://www.youtube.com/playlist?list=${{ secrets.PLAYLIST_ID }} > ${{ secrets.PLAYLIST_ID }}.txt
+          youtube-dl --get-title --get-id --no-warnings --no-mark-watched --ignore-errors https://www.youtube.com/playlist?list=PL_RrEj88onS-um2xFy01sY46ik_2yt_EQ > playlist.txt
+        # youtube-dl --get-title --get-id --no-warnings --no-mark-watched --ignore-errors https://www.youtube.com/playlist?list=${{ secrets.PLAYLIST_ID }} > playlist.txt
 
       - name: Setup git config
         run: |
@@ -30,6 +31,6 @@ jobs:
 
       - name: Commit the file
         run: |
-          git add ${{ secrets.PLAYLIST_ID }}.txt
+          git add playlist.txt
           git commit -m "new date commit"
           git push origin main
