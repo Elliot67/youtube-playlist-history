@@ -7,23 +7,23 @@ on:
 
 jobs:
   execute:
-    runs-on: ubuntu-18.04
-
+    runs-on: latest-ubuntu
     steps:
 
       - name: Download youtube-dl
-        run : |  
+        run : |
+          sudo apt update
           sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
           sudo chmod a+rx /usr/local/bin/youtube-dl
           sudo youtube-dl --update
-          youtube-dl --version
+          sudo apt install jq
 
       - name: Clone repo
         uses: actions/checkout@v2
 
       - name: Generate file
         run: |
-          youtube-dl --skip-download --get-title --get-id --no-warnings --no-mark-watched --ignore-errors --no-warnings --geo-bypass --no-progress https://www.youtube.com/playlist?list=${{ secrets.PLAYLIST_ID }} > playlist.txt
+          youtube-dl --dump-json --flat-playlist --no-warnings --ignore-errors --geo-bypass https://www.youtube.com/playlist?list=${{ secrets.PLAYLIST_ID }} | jq '"\(.id) | \(.uploader) | \(.title)"' > playlist.txt
 
       - name: Setup git config
         run: |
