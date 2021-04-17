@@ -31,5 +31,5 @@ jobs:
       - name: Commit the file
         run: |
           git add playlist.txt
-          git commit -m "new date commit"
+          git commit -m "🤖 update playlist tracks list"
           git push origin main
