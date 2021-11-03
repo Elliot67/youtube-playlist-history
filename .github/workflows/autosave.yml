@@ -33,5 +33,5 @@ jobs:
       - name: Commit the file
         run: |
           git add playlist.txt
-          git commit -m "🤖 update playlist tracks list"
+          git commit --allow-empty -m "🤖 update playlist tracks list"
           git push origin main
