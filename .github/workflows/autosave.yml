@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Download youtube-dl
+      - name: Download yt-dlp
         run : |
           sudo apt update
-          sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
-          sudo chmod a+rx /usr/local/bin/youtube-dl
-          sudo youtube-dl --update
+          sudo add-apt-repository ppa:tomtomtom/yt-dlp
+          sudo apt update
+          sudo apt install yt-dlp
           sudo apt install jq
 
       - name: Clone repo
@@ -23,7 +23,7 @@ jobs:
 
       - name: Generate file
         run: |
-          youtube-dl --dump-json --flat-playlist --no-warnings --ignore-errors --geo-bypass https://www.youtube.com/playlist?list=${{ secrets.PLAYLIST_ID }} | jq --raw-output '"\(.id) | \(.uploader) | \(.title)"' > playlist.txt
+          yt-dlp --dump-json --flat-playlist --no-warnings --ignore-errors --geo-bypass https://www.youtube.com/playlist?list=${{ secrets.PLAYLIST_ID }} | jq --raw-output '"\(.id) | \(.uploader) | \(.title)"' > playlist.txt
 
       - name: Setup git config
         run: |
